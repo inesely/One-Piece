@@ -12,31 +12,42 @@ async function getCharacters() {
     allCharacters = data.data.slice(0, 20);
 
     app.innerHTML = `
-      <h1>One Piece</h1>
-      <h2>Favorites</h2>
-<div id="favoritesContainer"></div>
+      <div class="header">
+        <p class="tagline">Anime API Project</p>
+        <h1>One Piece Universe Explorer</h1>
+        <p class="subtitle">Search, sort and save your favorite One Piece titles.</p>
+      </div>
 
-<select id="sortSelect">
-  <option value="">Sort by title</option>
-  <option value="az">A-Z</option>
-  <option value="za">Z-A</option>
-</select>
+      <section class="top-section">
+        <div class="favorites-box">
+          <h2>Favorites</h2>
+          <div id="favoritesContainer"></div>
+        </div>
 
-      <input 
-        type="text" 
-        id="searchInput" 
-        placeholder="Search a One Piece title..." 
-      />
+        <div class="controls">
+          <select id="sortSelect">
+            <option value="">Sort by title</option>
+            <option value="az">A-Z</option>
+            <option value="za">Z-A</option>
+          </select>
+
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search a One Piece title..."
+          />
+        </div>
+      </section>
 
       <div class="characters" id="charactersContainer"></div>
     `;
 
     displayCharacters(allCharacters);
-
     displayFavorites();
 
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
+
     searchInput.addEventListener('input', function () {
       const searchValue = searchInput.value.toLowerCase();
 
@@ -48,18 +59,18 @@ async function getCharacters() {
     });
 
     sortSelect.addEventListener('change', function () {
-  let sortedCharacters = [...allCharacters];
+      let sortedCharacters = [...allCharacters];
 
-  if (sortSelect.value === 'az') {
-    sortedCharacters.sort((a, b) => a.title.localeCompare(b.title));
-  }
+      if (sortSelect.value === 'az') {
+        sortedCharacters.sort((a, b) => a.title.localeCompare(b.title));
+      }
 
-  if (sortSelect.value === 'za') {
-    sortedCharacters.sort((a, b) => b.title.localeCompare(a.title));
-  }
+      if (sortSelect.value === 'za') {
+        sortedCharacters.sort((a, b) => b.title.localeCompare(a.title));
+      }
 
-  displayCharacters(sortedCharacters);
-});
+      displayCharacters(sortedCharacters);
+    });
 
   } catch (error) {
     console.error(error);
@@ -71,21 +82,22 @@ function displayCharacters(characters) {
   const charactersContainer = document.querySelector('#charactersContainer');
 
   charactersContainer.innerHTML = characters.map(char => `
-<div class="card">
-  <h2>${char.title}</h2>
-  <img src="${char.images.jpg.image_url}" alt="${char.title}" />
+    <div class="card">
+      <h2>${char.title}</h2>
+      <img src="${char.images.jpg.large_image_url}" alt="${char.title}" />
 
-  <p><strong>Year:</strong> ${char.year || 'Unknown'}</p>
-  <p><strong>Type:</strong> ${char.type || 'Unknown'}</p>
-  <p><strong>Score:</strong> ${char.score || 'N/A'}</p>
-  <p><strong>Episodes:</strong> ${char.episodes || 'Unknown'}</p>
-  <p><strong>Status:</strong> ${char.status || 'Unknown'}</p>
-  <p><strong>Synopsis:</strong> ${char.synopsis ? char.synopsis.slice(0, 120) + '...' : 'No description'}</p>
+      <p><strong>Year:</strong> ${char.year || 'Unknown'}</p>
+      <p><strong>Type:</strong> ${char.type || 'Unknown'}</p>
+      <p class="score-badge">⭐ ${char.score || 'N/A'}</p>
+      <p><strong>Episodes:</strong> ${char.episodes || 'Unknown'}</p>
+      <p><strong>Status:</strong> ${char.status || 'Unknown'}</p>
+      <p><strong>Synopsis:</strong> ${char.synopsis ? char.synopsis.slice(0, 120) + '...' : 'No description'}</p>
 
-  <button onclick="addToFavorites('${char.title}')">Add to Favorites</button>
-</div>
+      <button onclick="addToFavorites('${char.title}')">Add to Favorites</button>
+    </div>
   `).join('');
 }
+
 window.addToFavorites = function(title) {
   let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
@@ -99,20 +111,20 @@ window.addToFavorites = function(title) {
   }
 };
 
-
 function displayFavorites() {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const favoritesContainer = document.querySelector('#favoritesContainer');
 
-favoritesContainer.innerHTML = favorites
-  .map(title => `
-    <p>
-      ⭐ ${title}
-      <button onclick="removeFavorite('${title}')">Remove</button>
-    </p>
-  `)
-  .join('');
+  favoritesContainer.innerHTML = favorites
+    .map(title => `
+      <p>
+        ⭐ ${title}
+        <button onclick="removeFavorite('${title}')">Remove</button>
+      </p>
+    `)
+    .join('');
 }
+
 window.removeFavorite = function(title) {
   let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
@@ -122,4 +134,5 @@ window.removeFavorite = function(title) {
 
   displayFavorites();
 };
+
 getCharacters();
