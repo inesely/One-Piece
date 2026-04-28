@@ -75,3 +75,30 @@ select {
   margin: 15px;
   border-radius: 8px;
 }
+
+.characters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.card img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}

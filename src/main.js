@@ -67,9 +67,17 @@ function displayCharacters(characters) {
   const charactersContainer = document.querySelector('#charactersContainer');
 
   charactersContainer.innerHTML = characters.map(char => `
- <div class="card">
+<div class="card">
   <h2>${char.title}</h2>
   <img src="${char.images.jpg.image_url}" alt="${char.title}" />
+
+  <p><strong>Year:</strong> ${char.year || 'Unknown'}</p>
+  <p><strong>Type:</strong> ${char.type || 'Unknown'}</p>
+  <p><strong>Score:</strong> ${char.score || 'N/A'}</p>
+  <p><strong>Episodes:</strong> ${char.episodes || 'Unknown'}</p>
+  <p><strong>Status:</strong> ${char.status || 'Unknown'}</p>
+  <p><strong>Synopsis:</strong> ${char.synopsis ? char.synopsis.slice(0, 120) + '...' : 'No description'}</p>
+
   <button onclick="addToFavorites('${char.title}')">Add to Favorites</button>
 </div>
   `).join('');
