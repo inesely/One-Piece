@@ -132,11 +132,12 @@ window.addToFavorites = function(title) {
   if (!favorites.includes(title)) {
     favorites.push(title);
     localStorage.setItem('favorites', JSON.stringify(favorites));
-    alert(`${title} added to favorites!`);
+    console.log(`${title} added to favorites!`);
+showNotification(`${title} added to favorites!`);
     displayFavorites();
     displayStats();
   } else {
-    alert(`${title} is already in favorites!`);
+    showNotification(`${title} is already in favorites!`);
   }
 };
 
@@ -199,6 +200,17 @@ window.showFavoritesPage = function() {
 
   displayCharacters(favoriteItems);
 };
+function showNotification(message) {
+  const notification = document.createElement('div');
+  notification.className = 'notification';
+  notification.textContent = message;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 2500);
+}
 
 window.getCharacters = getCharacters;
 getCharacters();

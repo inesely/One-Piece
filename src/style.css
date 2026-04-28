@@ -264,3 +264,16 @@ margin: 0 auto;
     min-height: auto;
   }
 }
+
+.notification {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  background: red;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 999999;
+}
