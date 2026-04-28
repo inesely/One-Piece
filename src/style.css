@@ -1,8 +1,8 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: white;
+  background: #f3f4f6;
+  color: #111827;
 }
 
 #app {
@@ -13,92 +13,55 @@ body {
 
 h1 {
   text-align: center;
-  margin-bottom: 30px;
-  font-size: 40px;
+  font-size: 42px;
+}
+
+#searchInput,
+#sortSelect {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
 .characters {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-}
-
-.card {
-  background: #1e293b;
-  border-radius: 12px;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.card img {
-  width: 100%;
-  max-width: 200px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.card h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-
-#searchInput {
-  width: 100%;
-  max-width: 400px;
-  padding: 12px;
-  margin: 0 auto 30px;
-  display: block;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: gold;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background: orange;
-}
-
-select {
-  padding: 10px;
-  margin: 15px;
-  border-radius: 8px;
-}
-
-.characters {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
 }
 
 .card {
   background: white;
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .card img {
   width: 100%;
-  max-width: 220px;
-  height: auto;
-  border-radius: 10px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 .card h2 {
-  font-size: 20px;
-  margin-bottom: 15px;
+  font-size: 22px;
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #facc15;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #eab308;
 }
