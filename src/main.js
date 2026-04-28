@@ -10,9 +10,9 @@ async function getCharacters() {
 
     app.innerHTML = `
       <h1>One Piece</h1>
-      <div>
+      <div class="characters">
         ${characters.slice(0, 10).map(char => `
-          <div style="margin-bottom:20px;">
+          <div class="card">
             <h2>${char.title}</h2>
             <img src="${char.images.jpg.image_url}" width="200"/>
           </div>
