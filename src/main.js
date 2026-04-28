@@ -104,8 +104,22 @@ function displayFavorites() {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const favoritesContainer = document.querySelector('#favoritesContainer');
 
-  favoritesContainer.innerHTML = favorites
-    .map(title => `<p>⭐ ${title}</p>`)
-    .join('');
+favoritesContainer.innerHTML = favorites
+  .map(title => `
+    <p>
+      ⭐ ${title}
+      <button onclick="removeFavorite('${title}')">Remove</button>
+    </p>
+  `)
+  .join('');
 }
+window.removeFavorite = function(title) {
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+  favorites = favorites.filter(favorite => favorite !== title);
+
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+
+  displayFavorites();
+};
 getCharacters();
