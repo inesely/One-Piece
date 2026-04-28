@@ -39,11 +39,29 @@ async function getCharacters() {
         </div>
       </section>
 
+      <div class="stats">
+        <div class="stat-card">
+          <h3>Total items</h3>
+          <p id="totalItems">0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Average score</h3>
+          <p id="averageScore">0</p>
+        </div>
+
+      <div class="stat-card favorites-clickable" onclick="showFavoritesPage()">
+  <h3>Favorites</h3>
+  <p id="favoritesCount">0</p>
+</div>
+      </div>
+
       <div class="characters" id="charactersContainer"></div>
     `;
 
     displayCharacters(allCharacters);
     displayFavorites();
+    displayStats();
 
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
@@ -81,6 +99,16 @@ async function getCharacters() {
 function displayCharacters(characters) {
   const charactersContainer = document.querySelector('#charactersContainer');
 
+  if (characters.length === 0) {
+    charactersContainer.innerHTML = `
+      <div class="no-results">
+        <h2>No results found</h2>
+        <p>Try searching another One Piece title.</p>
+      </div>
+    `;
+    return;
+  }
+
   charactersContainer.innerHTML = characters.map(char => `
     <div class="card">
       <h2>${char.title}</h2>
@@ -91,7 +119,7 @@ function displayCharacters(characters) {
       <p class="score-badge">⭐ ${char.score || 'N/A'}</p>
       <p><strong>Episodes:</strong> ${char.episodes || 'Unknown'}</p>
       <p><strong>Status:</strong> ${char.status || 'Unknown'}</p>
-      <p><strong>Synopsis:</strong> ${char.synopsis ? char.synopsis.slice(0, 120) + '...' : 'No description'}</p>
+      <p class="synopsis"><strong>Synopsis:</strong> ${char.synopsis || 'No description'}</p>
 
       <button onclick="addToFavorites('${char.title}')">Add to Favorites</button>
     </div>
@@ -106,6 +134,7 @@ window.addToFavorites = function(title) {
     localStorage.setItem('favorites', JSON.stringify(favorites));
     alert(`${title} added to favorites!`);
     displayFavorites();
+    displayStats();
   } else {
     alert(`${title} is already in favorites!`);
   }
@@ -133,6 +162,43 @@ window.removeFavorite = function(title) {
   localStorage.setItem('favorites', JSON.stringify(favorites));
 
   displayFavorites();
+  displayStats();
 };
 
+function displayStats() {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+  const scores = allCharacters
+    .map(char => char.score)
+    .filter(score => score !== null);
+
+  const average =
+    scores.reduce((total, score) => total + score, 0) / scores.length;
+
+  document.querySelector('#totalItems').textContent = allCharacters.length;
+  document.querySelector('#averageScore').textContent = average.toFixed(1);
+  document.querySelector('#favoritesCount').textContent = favorites.length;
+}
+window.showFavoritesPage = function() {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+  const favoriteItems = allCharacters.filter(char =>
+    favorites.includes(char.title)
+  );
+
+  app.innerHTML = `
+    <div class="header">
+      <p class="tagline">Your saved collection</p>
+      <h1>Your Favorites</h1>
+      <p class="subtitle">All your saved One Piece titles in one place.</p>
+      <button onclick="getCharacters()">⬅ Back to Home</button>
+    </div>
+
+    <div class="characters" id="charactersContainer"></div>
+  `;
+
+  displayCharacters(favoriteItems);
+};
+
+window.getCharacters = getCharacters;
 getCharacters();
