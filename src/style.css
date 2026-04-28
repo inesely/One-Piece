@@ -89,7 +89,7 @@ button:hover {
 
 .characters {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-top: 30px;
 }
@@ -103,6 +103,8 @@ button:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   overflow: hidden;
   outline: 4px solid rgba(239, 68, 68, 0.15);
+  max-width: 320px;
+margin: 0 auto;
 }
 .card:hover {
   transform: translateY(-10px) scale(1.03);
@@ -119,7 +121,7 @@ button:hover {
 
 .card img {
   width: 100%;
-  height: 350px;
+  height: 250px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 15px;
@@ -226,4 +228,39 @@ button:hover {
 
 .card:hover .synopsis {
   max-height: 260px;
+}
+
+@media (max-width: 768px) {
+  .characters {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  #searchInput {
+    width: 100%;
+  }
+
+  #sortSelect {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 42px;
+  }
+
+  .header {
+    padding: 30px 15px;
+  }
+
+  .card {
+    min-height: auto;
+  }
 }

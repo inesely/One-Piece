@@ -9,7 +9,7 @@ async function getCharacters() {
     const response = await fetch('https://api.jikan.moe/v4/anime?q=one%20piece');
     const data = await response.json();
 
-    allCharacters = data.data.slice(0, 20);
+    allCharacters = data.data.slice(0, 50);
 
     app.innerHTML = `
       <div class="header">
