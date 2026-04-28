@@ -14,6 +14,12 @@ async function getCharacters() {
     app.innerHTML = `
       <h1>One Piece</h1>
 
+<select id="sortSelect">
+  <option value="">Sort by title</option>
+  <option value="az">A-Z</option>
+  <option value="za">Z-A</option>
+</select>
+
       <input 
         type="text" 
         id="searchInput" 
@@ -26,7 +32,7 @@ async function getCharacters() {
     displayCharacters(allCharacters);
 
     const searchInput = document.querySelector('#searchInput');
-
+    const sortSelect = document.querySelector('#sortSelect');
     searchInput.addEventListener('input', function () {
       const searchValue = searchInput.value.toLowerCase();
 
@@ -36,6 +42,20 @@ async function getCharacters() {
 
       displayCharacters(filteredCharacters);
     });
+
+    sortSelect.addEventListener('change', function () {
+  let sortedCharacters = [...allCharacters];
+
+  if (sortSelect.value === 'az') {
+    sortedCharacters.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  if (sortSelect.value === 'za') {
+    sortedCharacters.sort((a, b) => b.title.localeCompare(a.title));
+  }
+
+  displayCharacters(sortedCharacters);
+});
 
   } catch (error) {
     console.error(error);

@@ -69,3 +69,9 @@ button {
 button:hover {
   background: orange;
 }
+
+select {
+  padding: 10px;
+  margin: 15px;
+  border-radius: 8px;
+}
