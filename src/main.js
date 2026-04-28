@@ -13,6 +13,8 @@ async function getCharacters() {
 
     app.innerHTML = `
       <h1>One Piece</h1>
+      <h2>Favorites</h2>
+<div id="favoritesContainer"></div>
 
 <select id="sortSelect">
   <option value="">Sort by title</option>
@@ -30,6 +32,8 @@ async function getCharacters() {
     `;
 
     displayCharacters(allCharacters);
+
+    displayFavorites();
 
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
@@ -89,8 +93,19 @@ window.addToFavorites = function(title) {
     favorites.push(title);
     localStorage.setItem('favorites', JSON.stringify(favorites));
     alert(`${title} added to favorites!`);
+    displayFavorites();
   } else {
     alert(`${title} is already in favorites!`);
   }
 };
+
+
+function displayFavorites() {
+  const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  const favoritesContainer = document.querySelector('#favoritesContainer');
+
+  favoritesContainer.innerHTML = favorites
+    .map(title => `<p>⭐ ${title}</p>`)
+    .join('');
+}
 getCharacters();
