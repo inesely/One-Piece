@@ -47,11 +47,22 @@ function displayCharacters(characters) {
   const charactersContainer = document.querySelector('#charactersContainer');
 
   charactersContainer.innerHTML = characters.map(char => `
-    <div class="card">
-      <h2>${char.title}</h2>
-      <img src="${char.images.jpg.image_url}" alt="${char.title}" />
-    </div>
+ <div class="card">
+  <h2>${char.title}</h2>
+  <img src="${char.images.jpg.image_url}" alt="${char.title}" />
+  <button onclick="addToFavorites('${char.title}')">Add to Favorites</button>
+</div>
   `).join('');
 }
+window.addToFavorites = function(title) {
+  let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
+  if (!favorites.includes(title)) {
+    favorites.push(title);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert(`${title} added to favorites!`);
+  } else {
+    alert(`${title} is already in favorites!`);
+  }
+};
 getCharacters();
