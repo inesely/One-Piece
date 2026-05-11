@@ -9,7 +9,7 @@ async function getCharacters() {
     const response = await fetch('https://api.jikan.moe/v4/anime?q=one%20piece');
     const data = await response.json();
 
-    allCharacters = data.data.slice(0, 50);
+    allCharacters = data.data;
 
     app.innerHTML = `
       <div class="header">
@@ -31,6 +31,14 @@ async function getCharacters() {
             <option value="za">Z-A</option>
           </select>
 
+          <select id="typeFilter">
+  <option value="">All types</option>
+  <option value="TV">TV</option>
+  <option value="Movie">Movie</option>
+  <option value="OVA">OVA</option>
+  <option value="Special">Special</option>
+</select>
+
           <input
             type="text"
             id="searchInput"
@@ -50,10 +58,10 @@ async function getCharacters() {
           <p id="averageScore">0</p>
         </div>
 
-      <div class="stat-card favorites-clickable" onclick="showFavoritesPage()">
-  <h3>Favorites</h3>
-  <p id="favoritesCount">0</p>
-</div>
+        <div class="stat-card favorites-clickable" onclick="showFavoritesPage()">
+          <h3>Favorites</h3>
+          <p id="favoritesCount">0</p>
+        </div>
       </div>
 
       <div class="characters" id="charactersContainer"></div>
@@ -65,6 +73,7 @@ async function getCharacters() {
 
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
+    const typeFilter = document.querySelector('#typeFilter');
 
     searchInput.addEventListener('input', function () {
       const searchValue = searchInput.value.toLowerCase();
@@ -76,6 +85,16 @@ async function getCharacters() {
       displayCharacters(filteredCharacters);
     });
 
+
+    typeFilter.addEventListener('change', function () {
+  const selectedType = typeFilter.value;
+
+  const filteredByType = selectedType === ''
+    ? allCharacters
+    : allCharacters.filter(char => char.type === selectedType);
+
+  displayCharacters(filteredByType);
+});
     sortSelect.addEventListener('change', function () {
       let sortedCharacters = [...allCharacters];
 
@@ -92,7 +111,7 @@ async function getCharacters() {
 
   } catch (error) {
     console.error(error);
-    app.innerHTML = `<p>Erreur API</p>`;
+    app.innerHTML = `<p>Error API</p>`;
   }
 }
 
@@ -132,8 +151,8 @@ window.addToFavorites = function(title) {
   if (!favorites.includes(title)) {
     favorites.push(title);
     localStorage.setItem('favorites', JSON.stringify(favorites));
-    console.log(`${title} added to favorites!`);
-showNotification(`${title} added to favorites!`);
+
+    showNotification(`${title} added to favorites!`);
     displayFavorites();
     displayStats();
   } else {
@@ -162,6 +181,7 @@ window.removeFavorite = function(title) {
 
   localStorage.setItem('favorites', JSON.stringify(favorites));
 
+  showNotification(`${title} removed from favorites!`);
   displayFavorites();
   displayStats();
 };
@@ -180,6 +200,7 @@ function displayStats() {
   document.querySelector('#averageScore').textContent = average.toFixed(1);
   document.querySelector('#favoritesCount').textContent = favorites.length;
 }
+
 window.showFavoritesPage = function() {
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
@@ -200,6 +221,7 @@ window.showFavoritesPage = function() {
 
   displayCharacters(favoriteItems);
 };
+
 function showNotification(message) {
   const notification = document.createElement('div');
   notification.className = 'notification';

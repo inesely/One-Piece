@@ -63,7 +63,8 @@ button:hover {
 }
 
 #searchInput,
-#sortSelect {
+#sortSelect,
+#typeFilter {
   height: 52px;
   border-radius: 14px;
   border: 2px solid #e5e7eb;
@@ -78,6 +79,10 @@ button:hover {
 }
 
 #sortSelect {
+  width: 200px;
+}
+
+#typeFilter {
   width: 200px;
 }
 
