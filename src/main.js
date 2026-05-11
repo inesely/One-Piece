@@ -16,6 +16,7 @@ async function getCharacters() {
         <p class="tagline">Anime API Project</p>
         <h1>One Piece Universe Explorer</h1>
         <p class="subtitle">Search, sort and save your favorite One Piece titles.</p>
+        <button id="themeToggle">🌙 Toggle Theme</button>
       </div>
 
       <section class="top-section">
@@ -70,6 +71,7 @@ async function getCharacters() {
     displayCharacters(allCharacters);
     displayFavorites();
     displayStats();
+    setupTheme();
 
     const searchInput = document.querySelector('#searchInput');
     const sortSelect = document.querySelector('#sortSelect');
@@ -237,6 +239,25 @@ function showNotification(message) {
 
 window.getCharacters = getCharacters;
 getCharacters();
+function setupTheme() {
+  const themeToggle = document.querySelector('#themeToggle');
+
+  const savedTheme = localStorage.getItem('theme');
+
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+  }
+
+  themeToggle.addEventListener('click', function () {
+    document.body.classList.toggle('dark-mode');
+
+    if (document.body.classList.contains('dark-mode')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  });
+}
 
 function observeCards() {
   const cards = document.querySelectorAll('.card');

@@ -94,8 +94,8 @@ button:hover {
 
 .characters {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
   margin-top: 30px;
 }
 
@@ -112,8 +112,8 @@ button:hover {
 margin: 0 auto;
 }
 .card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(239, 68, 68, 0.25);
   background-color: #ef4444;
   color: white;
   border-color: #facc15;
@@ -126,7 +126,7 @@ margin: 0 auto;
 
 .card img {
   width: 100%;
-  height: 250px;
+  height: 260px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 15px;
@@ -160,9 +160,7 @@ margin: 0 auto;
   font-weight: bold;
 }
 
-.card {
-  backdrop-filter: blur(8px);
-}
+
 
 .top-section {
   margin-bottom: 40px;
@@ -291,4 +289,32 @@ margin: 0 auto;
 .card.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.dark-mode {
+  background: linear-gradient(135deg, #111827, #1f2937, #000);
+  color: white;
+}
+
+.dark-mode .card {
+  background: #1f2937;
+  border-color: #facc15;
+}
+
+.dark-mode .controls,
+.dark-mode .favorites-box,
+.dark-mode .stat-card {
+  background: #111827;
+  color: white;
+}
+
+.dark-mode input,
+.dark-mode select {
+  background: #374151;
+  color: white;
+  border-color: #facc15;
+}
+
+#themeToggle {
+  margin-top: 20px;
 }
