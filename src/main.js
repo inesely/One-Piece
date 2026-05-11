@@ -143,6 +143,7 @@ function displayCharacters(characters) {
       <button onclick="addToFavorites('${char.title}')">Add to Favorites</button>
     </div>
   `).join('');
+  observeCards();
 }
 
 window.addToFavorites = function(title) {
@@ -236,3 +237,19 @@ function showNotification(message) {
 
 window.getCharacters = getCharacters;
 getCharacters();
+
+function observeCards() {
+  const cards = document.querySelectorAll('.card');
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  });
+
+  cards.forEach(card => {
+    observer.observe(card);
+  });
+}

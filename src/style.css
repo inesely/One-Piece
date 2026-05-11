@@ -282,3 +282,13 @@ margin: 0 auto;
   font-weight: bold;
   z-index: 999999;
 }
+
+.card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
