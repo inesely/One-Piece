@@ -318,3 +318,12 @@ margin: 0 auto;
 #themeToggle {
   margin-top: 20px;
 }
+.card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
