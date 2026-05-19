@@ -275,18 +275,4 @@ function setupTheme() {
   });
 }
 
-function observeCards() {
-  const cards = document.querySelectorAll('.card');
 
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  });
-
-  cards.forEach(card => {
-    observer.observe(card);
-  });
-}
