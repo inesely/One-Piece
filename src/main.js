@@ -6,8 +6,13 @@ app.innerHTML = `<p>Loading...</p>`;
 
 async function getCharacters() {
   try {
-    const response = await fetch('https://api.jikan.moe/v4/anime?q=one%20piece');
-    const data = await response.json();
+   const response = await fetch('https://api.jikan.moe/v4/anime?q=one%20piece');
+
+if (!response.ok) {
+  throw new Error('API request failed');
+}
+
+const data = await response.json();
 
     allCharacters = data.data;
 
@@ -123,7 +128,12 @@ async function getCharacters() {
 
   } catch (error) {
     console.error(error);
-    app.innerHTML = `<p>Error API</p>`;
+    app.innerHTML = `
+  <div class="no-results">
+    <h2>API temporarily unavailable</h2>
+    <p>Please refresh the page in a few seconds.</p>
+  </div>
+`;
   }
 }
 
