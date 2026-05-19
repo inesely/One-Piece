@@ -77,15 +77,25 @@ async function getCharacters() {
     const sortSelect = document.querySelector('#sortSelect');
     const typeFilter = document.querySelector('#typeFilter');
 
-    searchInput.addEventListener('input', function () {
-      const searchValue = searchInput.value.toLowerCase();
+ searchInput.addEventListener('input', function () {
+  const searchValue = searchInput.value.trim().toLowerCase();
 
-      const filteredCharacters = allCharacters.filter(char =>
-        char.title.toLowerCase().includes(searchValue)
-      );
+  if (searchValue.length === 1) {
+    document.querySelector('#charactersContainer').innerHTML = `
+      <div class="no-results">
+        <h2>Search too short</h2>
+        <p>Please enter at least 2 letters.</p>
+      </div>
+    `;
+    return;
+  }
 
-      displayCharacters(filteredCharacters);
-    });
+  const filteredCharacters = allCharacters.filter(char =>
+    char.title.toLowerCase().includes(searchValue)
+  );
+
+  displayCharacters(filteredCharacters);
+});
 
 
     typeFilter.addEventListener('change', function () {
